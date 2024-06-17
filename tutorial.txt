@@ -1,0 +1,26 @@
+lIGAÇÃO DO BANCO DE DADOS MoNGODB COM ELECTRON
+
+Passo 1) ter um servidor de banco de dados com o ELECTRON
+- localhost (instalado com o windows) (desenvolvimento)
+- físico (baseado no linux) em uma rede local (switch)
+- nuvem (atlas (free 540Mb AWS)) (back-end (netflix, e-commerce))
+
+Passo 2) instalar o mongoose (framework para trabalhar o mongodb)
+
+Passo 3) criar um arquivo database.js na raiz e configurar a conexão com o banco de dados
+
+Passo 4) importar no main os metodos para conectar e desconectar o banco de dados
+
+Passo 5) na janela principal, deixar o objeto win público (gerenciar o banco)
+
+Passo 6) criar uma função para verificar status de conexão (criar após última linha)
+este passo poderia estar junto com app.whenReady(), por uma questão de organização e
+melhor entendimento, foi criado fora
+
+Passo 7)
+dentro do whenReady()
+executar a função statusConexao()
+
+Passo 8) IMPORTANTE
+dentro de app.whenReady()
+criar um metodo para desconectar o banco de dados quando a janela principal for fechada
