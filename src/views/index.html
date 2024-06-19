@@ -5,11 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONEST - Controle de Estoque</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 
 <body>
-    <h1>CONEST</h1>
-
+    <div class="container">
+        <h1>CONEST</h1>
+        <button class="btn" ><img src="../public/img/client.png" alt="Clientes" onclick="client()"></button>
+        <button class="btn" ><img src="../public/img/provider.png" alt="Fornecedores" onclick="fornec()"></button>
+        <button class="btn"><img src="../public/img/produc.png" alt="Produtos" onclick="produto()"></button>
+    </div>
+    <footer>
+        <p id="dataAtual"></p>
+    </footer>
+    <script src="../public/js/bootstrap.min.js"></script>
     <script src="renderer.js"></script>
 </body>
 
