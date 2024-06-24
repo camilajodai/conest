@@ -1,11 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* esconder id do cliente */
+#inputId {
+    display: none;
+}
+
+#btnReset{
+    width: 50px;
+    height: 50px;
+    background-image: url('../img/clear.png');
+    background-size: cover;
+    margin-left: 30px;
+    border: none;
+}
+
 footer {
     background-color: #007acc;
     width: 100%;
     position: fixed;
-    bottom: 0; 
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    height: 42px;
 }
 
 footer p {
     color: white;
     margin: 10px 0px 10px 10px;
 }
+
+footer img {
+    margin-right: 7 px;
+}
+
+#footerAbout{
+    position: fixed;
+    bottom: 0;
+    background-color: #f0f0f0;
+}
+ 
+#btnFechar {
+    width: 60px;
+    height: 25px;
+    margin: 7px 10px 0;
+    font-size: 10pt;
+    right: 0;
+    position: fixed;
+}
+

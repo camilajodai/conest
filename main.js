@@ -25,86 +25,74 @@ let client
 let fornec
 let produto
 
-const clientWindow= () => {
-  // se a janela about não estiver aberta(bug 1)
-  if (!client) {
-    client = new BrowserWindow({
-      width: 360, //largura
-      height: 220,  //altura
-      resizable: false, //evitar o redimensionamento
-      autoHideMenuBar: true, //esconder menu
-      icon: './src/public/img/icon.png' //ícone
+const clientWindow = () => {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
+    const client = new BrowserWindow({
+      width: 800,
+      height: 600,
+      icon: './src/public/img/client.png',
+      autoHideMenuBar: true,
+      resizable: false,
+      parent: father,
+      modal: true
     })
+    client.loadFile('./src/views/cliente.html')
   }
-
-  client.loadFile('./src/views/cliente.html')
-  // reabrir a janela se estiver fechada
-  client.on('closed', () => {
-    client = null
-  })
-
 }
-
-const produtoWindow= () => {
-  // se a janela about não estiver aberta(bug 1)
-  if (!produto) {
-    produto = new BrowserWindow({
-      width: 360, //largura
-      height: 220,  //altura
-      resizable: false, //evitar o redimensionamento
-      autoHideMenuBar: true, //esconder menu
-      icon: './src/public/img/icon.png' //ícone
+const produtoWindow = () => {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
+    const produto = new BrowserWindow({
+      width: 800,
+      height: 600,
+      icon: './src/public/img/produc.png',
+      autoHideMenuBar: true,
+      resizable: false,
+      parent: father,
+      modal: true
     })
+
+    produto.loadFile('./src/views/produto.html')
   }
-
-  produto.loadFile('./src/views/produto.html')
-  // reabrir a janela se estiver fechada
-  produto.on('closed', () => {
-    produto = null
-  })
-
 }
 
 const fornecWindow = () => {
-  // se a janela about não estiver aberta(bug 1)
-  if (!fornec) {
-    fornec = new BrowserWindow({
-      width: 360, //largura
-      height: 220,  //altura
-      resizable: false, //evitar o redimensionamento
-      autoHideMenuBar: true, //esconder menu
-      icon: './src/public/img/icon.png' //ícone
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
+    const fornec = new BrowserWindow({
+      width: 800,
+      height: 600,
+      icon: './src/public/img/provider.png',
+      autoHideMenuBar: true,
+      resizable: false,
+      parent: father,
+      modal: true
     })
+
+
+    fornec.loadFile('./src/views/fornec.html')
   }
-
-  fornec.loadFile('./src/views/fornec.html')
-  // reabrir a janela se estiver fechada
-  fornec.on('closed', () => {
-    fornec = null
-  })
-
 }
 
 const aboutWindow = () => {
-  // se a janela about não estiver aberta(bug 1)
-  if (!about) {
-    about = new BrowserWindow({
-      width: 360, //largura
-      height: 300,  //altura
-      resizable: false, //evitar o redimensionamento
-      autoHideMenuBar: true, //esconder menu
-      icon: './src/public/img/about.png' //ícone
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
+    const about = new BrowserWindow({
+      width: 360,
+      height: 290,
+      icon: './src/public/img/about.png',
+      autoHideMenuBar: true,
+      resizable: false,
+      parent: father,
+      modal: true,
+      minimizable: false
     })
+
+
+    about.loadFile('./src/views/sobre.html')
   }
-
-  about.loadFile('./src/views/sobre.html')
-  // reabrir a janela se estiver fechada
-  about.on('closed', () => {
-    about = null
-  })
-
 }
-
 // iniciar a aplicação
 app.whenReady().then(() => {
 
@@ -133,6 +121,8 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+
 
 const template = [
   {
