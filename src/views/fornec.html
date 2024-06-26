@@ -15,7 +15,7 @@
     <div class="container">
         <h1>Fornecedores</h1>
         <!-- caixa de input usada na pesquisa de nome de cliente -->
-        <form class="row g-3" id="frmFornec">
+        <form class="row g-3" id="frmFornecedor">
             <div class="col-md-6">
                 <input type="text" class="form-control" id="inputSearch" maxlength="30" spellcheck="false">
             </div>
@@ -57,13 +57,12 @@
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" id="btnCep" onclick="buscarcep()">Buscar por CEP</button>
+                <button type="button" class="btn btn-primary" id="btnCep" onclick="buscarCep()">Buscar por CEP</button>
             </div>
 
             <div class="col-md-4">
                 <label for="inputLogradouro" class="form-label">Logradouro</label>
-                <input type="text" class="form-control" id="inputLogradouro" required maxlength="100"
-                    spellcheck="false">
+                <input type="text" class="form-control" id="inputLogradouro" required maxlength="100" spellcheck="false">
             </div>
 
             <div class="col-md-2">
@@ -85,10 +84,10 @@
                 <label for="inputUf" class="form-label">UF</label>
                 <input type="text" class="form-control" id="inputUf" required maxlength="2" spellcheck="false">
             </div>
+            
             <div class="col-md-3">
                 <label for="inputComplemento" class="form-label">Complemento</label>
-                <input type="text" class="form-control" id="inputComplemento" maxlength="100"
-                    spellcheck="false">
+                <input type="text" class="form-control" id="inputComplemento" maxlength="100" spellcheck="false">
             </div>
             <!-- BOTOES -->
             <div class="col-12">
@@ -102,7 +101,9 @@
         </form>
     </div>
     <script src="../public/js/bootstrap.min.js"></script>
+    <script src="renderer.js"></script>
     <script src="script.js"></script>
+
 </body>
 
 </html>
