@@ -43,7 +43,7 @@
             <!-- telefone do cliente -->
             <div class="col-md-6">
                 <label for="inputCnpj" class="form-label">CNPJ</label>
-                <input type="number" class="form-control" id="inputCnpj" required min="0" max="20">
+                <input type="number" class="form-control" id="inputCnpj" required min="0" max="15">
             </div>
             <!-- email do cliente -->
             <div class="col-12">
@@ -53,59 +53,37 @@
             <!-- endereço -->
             <div class="col-md-4">
                 <label for="inputCep" class="form-label">CEP</label>
-                <input type="number" class="form-control" id="inputCep" required min="0" max="8">
+                <input type="text" class="form-control" id="inputCep" required maxlength="8" spellcheck="false">
             </div>
+
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" id="btnCep">Buscar por CEP</button>
+                <button type="button" class="btn btn-primary" id="btnCep" onclick="buscarcep()">Buscar por CEP</button>
             </div>
+
             <div class="col-md-4">
                 <label for="inputLogradouro" class="form-label">Logradouro</label>
                 <input type="text" class="form-control" id="inputLogradouro" required maxlength="100"
                     spellcheck="false">
             </div>
+
             <div class="col-md-2">
                 <label for="inputNumero" class="form-label">Número</label>
                 <input type="text" class="form-control" id="inputNumero" required maxlength="100" spellcheck="false">
             </div>
+
             <div class="col-md-4">
                 <label for="inputBairro" class="form-label">Bairro</label>
                 <input type="text" class="form-control" id="inputBairro" required maxlength="100" spellcheck="false">
             </div>
+
             <div class="col-md-4">
                 <label for="inputCidade" class="form-label">Cidade</label>
                 <input type="text" class="form-control" id="inputCidade" required maxlength="100" spellcheck="false">
             </div>
+
             <div class="col-md-1">
                 <label for="inputUf" class="form-label">UF</label>
-                <select class="form-select" aria-label="Default select example" id="select">
-                    <option value="1">AC</option>
-                    <option value="2">AL</option>
-                    <option value="3">AP</option>
-                    <option value="4">AM</option>
-                    <option value="5">BA</option>
-                    <option value="6">CE</option>
-                    <option value="7">DF</option>
-                    <option value="8">ES</option>
-                    <option value="9">GO</option>
-                    <option value="10">MA</option>
-                    <option value="11">MT</option>
-                    <option value="12">MS</option>
-                    <option value="13">MG</option>
-                    <option value="14">PA</option>
-                    <option value="15">PB</option>
-                    <option value="16">PR</option>
-                    <option value="17">PE</option>
-                    <option value="18">PI</option>
-                    <option value="19">RJ</option>
-                    <option value="20">RN</option>
-                    <option value="21">RS</option>
-                    <option value="22">RO</option>
-                    <option value="23">RR</option>
-                    <option value="24">SC</option>
-                    <option value="25">SP</option>
-                    <option value="26">SE</option>
-                    <option value="27">TO</option>
-                </select>
+                <input type="text" class="form-control" id="inputUf" required maxlength="2" spellcheck="false">
             </div>
             <div class="col-md-3">
                 <label for="inputComplemento" class="form-label">Complemento</label>
@@ -124,7 +102,7 @@
         </form>
     </div>
     <script src="../public/js/bootstrap.min.js"></script>
-    <script src="../public/js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

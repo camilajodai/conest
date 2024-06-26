@@ -9,7 +9,7 @@ function buscarcep() {
             frmFornec.inputLogradouro.value = `${dados.logradouro}`
             frmFornec.inputBairro.value = `${dados.bairro}`
             frmFornec.inputCidade.value = `${dados.localidade}`
-            frmFornec.inputUf.value = `${dados.uf}`
+            frmFornec.inputUfvalue = `${dados.uf}`
         })
         .catch((error) => {
             console.log(`Erro ao obter o endereço: ${error}`)
