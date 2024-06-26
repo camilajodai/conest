@@ -8,8 +8,8 @@ const { conectar, desconectar } = require('./database.js')
 let win
 const createWindow = () => {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     icon: './src/public/img/package.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
@@ -29,8 +29,8 @@ const clientWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
   if (father) {
     const client = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: 1280,
+      height: 720,
       icon: './src/public/img/client.png',
       autoHideMenuBar: true,
       resizable: false,
@@ -44,8 +44,8 @@ const produtoWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
   if (father) {
     const produto = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: 1280,
+      height: 720,
       icon: './src/public/img/produc.png',
       autoHideMenuBar: true,
       resizable: false,
@@ -61,8 +61,8 @@ const fornecWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
   if (father) {
     const fornec = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: 1280,
+      height: 720,
       icon: './src/public/img/provider.png',
       autoHideMenuBar: true,
       resizable: false,
