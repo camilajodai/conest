@@ -10,9 +10,10 @@ function buscarCep() {
             frmFornecedor.inputLogradouro.value = `${dados.logradouro}`
             frmFornecedor.inputBairro.value = `${dados.bairro}`
             frmFornecedor.inputCidade.value = `${dados.localidade}`
-            frmFornecedor.inputUf.value = `${dados.uf}`
+            frmFornecedor.uf.value = `${dados.uf}`
         })
         .catch((error) => {
+            alert(error)
             console.log(`Erro ao obter o endereço: ${error}`)
         })
     }
