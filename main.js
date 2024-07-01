@@ -24,6 +24,7 @@ let about // resolver bug de abertuda de varias janelas
 let client
 let fornec
 let produto
+let relatorio
 
 const clientWindow = () => {
   const father = BrowserWindow.getFocusedWindow()
@@ -72,6 +73,24 @@ const fornecWindow = () => {
 
 
     fornec.loadFile('./src/views/fornec.html')
+  }
+}
+
+const relatorioWindow = () => {
+  const father = BrowserWindow.getFocusedWindow()
+  if (father) {
+    const relatorio = new BrowserWindow({
+      width: 1280,
+      height: 720,
+      icon: './src/public/img/report.png',
+      autoHideMenuBar: true,
+      resizable: false,
+      parent: father,
+      modal: true
+    })
+
+
+    relatorio.loadFile('./src/views/relatorio.html')
   }
 }
 
@@ -176,6 +195,10 @@ const template = [
     ]
   },
   {
+    label: 'Relatórios',
+    click: () => relatorioWindow(),
+  },
+  {
     label: 'Ajuda',
     submenu: [
       {
@@ -201,6 +224,12 @@ ipcMain.on('open-fornec', () => {
 ipcMain.on('open-produto', () => {
   produtoWindow()
 })
+
+
+ipcMain.on('open-relatorio', () => {
+  relatorioWindow()
+})
+
 // -------------------------------------------
 // função que verifica o status da conexão
 const statusConexao = async () => {

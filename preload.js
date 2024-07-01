@@ -4,7 +4,8 @@ const { ipcRenderer, contextBridge } = require('electron')
 contextBridge.exposeInMainWorld('api', {
     openClient: () => ipcRenderer.send('open-client'),
     openProduto: () => ipcRenderer.send('open-produto'),
-    openFornec: () => ipcRenderer.send('open-fornec')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+    openFornec: () => ipcRenderer.send('open-fornec'),
+    openRelatorio: () => ipcRenderer.send('open-relatorio')
 })
 
 
