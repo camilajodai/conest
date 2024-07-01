@@ -68,3 +68,15 @@ input[type=number]::-webkit-outer-spin-button {
 #uf {
     margin-top: 8px;
 }
+
+/* imagem docprodutp */
+#imageProduct {
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    width: 260px;
+    height: 260px;
+    padding: 4px;
+    position: fixed;
+    right: 150px;
+    bottom: 90px;
+}
