@@ -3,7 +3,7 @@ const { app, BrowserWindow } = require('electron/main')
 const path = require('node:path')
 // importar o módulo de conexão
 const { conectar, desconectar } = require('./database.js')
-const clienteModel = require ('./src/models/Cliente.js')
+const clienteModel = require('./src/models/Cliente.js')
 
 // janela principal (definir o objeto win como variavel publica)
 let win
@@ -37,7 +37,10 @@ const clientWindow = () => {
       autoHideMenuBar: true,
       resizable: false,
       parent: father,
-      modal: true
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
     client.loadFile('./src/views/cliente.html')
   }
@@ -52,7 +55,10 @@ const produtoWindow = () => {
       autoHideMenuBar: true,
       resizable: false,
       parent: father,
-      modal: true
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
 
     produto.loadFile('./src/views/produto.html')
@@ -69,7 +75,10 @@ const fornecWindow = () => {
       autoHideMenuBar: true,
       resizable: false,
       parent: father,
-      modal: true
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
 
 
@@ -87,7 +96,10 @@ const relatorioWindow = () => {
       autoHideMenuBar: true,
       resizable: false,
       parent: father,
-      modal: true
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
 
 
@@ -106,7 +118,10 @@ const aboutWindow = () => {
       resizable: false,
       parent: father,
       modal: true,
-      minimizable: false
+      minimizable: false,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
 
 
@@ -124,8 +139,8 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('db-conect', async (event, message) => {
-     dbCon = await conectar()
-     event.reply('db-message', "conectado")
+    dbCon = await conectar()
+    event.reply('db-message', "conectado")
   })
 
   // desconectar do banco ao encerrar a janela
@@ -247,3 +262,36 @@ const statusConexao = async () => {
     win.webContents.send('db-status', `ERRO DE CONEXÃO ${error.message}`)
   }
 }
+
+
+// CRUD CREATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+ipcMain.on('new-client', async (event, cliente) => {
+  console.log(cliente) //teste do passo 2
+  // passo 3 - cadastrar o cliente no mongodb
+  try {
+    // extarir os dados do objeto
+    const novoCliente = new clienteModel({
+      nomeCliente: cliente.nomeCli,
+      foneCliente: cliente.foneCli,
+      emailCliente: cliente.emailCli
+    })
+    await novoCliente.save() //save() - mongoose
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+// CRUD READ >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+
+
+
+// CRUD UPDATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+
+
+
+// CRUD DELETE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //

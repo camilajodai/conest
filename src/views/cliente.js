@@ -13,6 +13,15 @@ let emailCliente = document.getElementById('inputAddress')
 formCliente.addEventListener('submit', async(event) => {
     event.preventDefault()
     console.log(nomeCliente.value, foneCliente.value, emailCliente.value)
+    // empacotar os dados em um objeto e enviar ao main.js (passo 2)
+    const cliente = {
+        nomeCli: nomeCliente.value,
+        foneCli: foneCliente.value,
+        emailCli: emailCliente.value
+    }
+    api.newClient(cliente)
+    // limpar os dados do form após envio
+    formCliente.reset()
 })
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
