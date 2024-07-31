@@ -3,6 +3,7 @@ const { app, BrowserWindow } = require('electron/main')
 const path = require('node:path')
 // importar o módulo de conexão
 const { conectar, desconectar } = require('./database.js')
+const clienteModel = require ('./src/models/Cliente.js')
 
 // janela principal (definir o objeto win como variavel publica)
 let win
@@ -119,6 +120,12 @@ app.whenReady().then(() => {
   ipcMain.on('send-message', (event, message) => {
     console.log(`<<< ${message}`)
     statusConexao()
+
+  })
+
+  ipcMain.on('db-conect', async (event, message) => {
+     dbCon = await conectar()
+     event.reply('db-message', "conectado")
   })
 
   // desconectar do banco ao encerrar a janela
@@ -235,7 +242,7 @@ ipcMain.on('open-relatorio', () => {
 const statusConexao = async () => {
   try {
     await conectar()
-    win.webContents.send('db-status', "Banco de Dados conectado.")
+    win.webContents.send('db-status', "Banco de dados conectado.")
   } catch (error) {
     win.webContents.send('db-status', `ERRO DE CONEXÃO ${error.message}`)
   }

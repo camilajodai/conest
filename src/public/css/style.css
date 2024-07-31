@@ -4,9 +4,9 @@
 }
 
 /* esconder id do cliente */
-#inputId {
+/* #inputId {
     display: none;
-}
+} */
 
 #btnReset {
     width: 50px;
@@ -79,4 +79,8 @@ input[type=number]::-webkit-outer-spin-button {
     position: fixed;
     right: 150px;
     bottom: 90px;
+}
+
+#status {
+    margin-right: 10px;
 }
