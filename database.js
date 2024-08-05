@@ -9,25 +9,40 @@ const mongoose = require('mongoose')
 // definir um bd
 let url = "mongodb+srv://admin:senac123@clusterconest.ffjytr4.mongodb.net/dbconest"
 
+let = isConnected = false
+
+const dbStatus = async () => {
+    if (isConnected === false) {
+        await conectar()
+    }
+}
+
 // metodo para conectar
 const conectar = async () => {
-    try {
-        await mongoose.connect(url)
-        console.log("mongodb conectado")
-    } catch (error) {
-        console.log(`problema detectado: ${error.message}`)
+    if (isConnected === false) {
+        try {
+            await mongoose.connect(url)
+            isConnected = true
+            console.log("mongodb conectado")
+            return (isConnected)
+        } catch (error) {
+            console.log(`problema detectado: ${error.message}`)
+        }
     }
 }
 
 // metodo para desconectar
 const desconectar = async () => {
-    try {
-        await mongoose.disconnect(url)
-        console.log("mongodb desconectado")
-    } catch (error) {
-        console.log(`problema detectado: ${error.message}`)
+    if (isConnected === true) {
+        try {
+            await mongoose.disconnect(url)
+            isConnected = false
+            console.log("mongodb desconectado")
+        } catch (error) {
+            console.log(`problema detectado: ${error.message}`)
+        }
     }
 }
 
 // exportar os metodos conectar e desconectar
-module.exports = { conectar, desconectar }
+module.exports = { dbStatus, desconectar }

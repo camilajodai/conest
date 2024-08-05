@@ -7,7 +7,8 @@ contextBridge.exposeInMainWorld('api', {
     openFornec: () => ipcRenderer.send('open-fornec'),
     openRelatorio: () => ipcRenderer.send('open-relatorio'),
     newClient: (cliente) => ipcRenderer.send('new-client', cliente),
-    dbMessage: (message) => ipcRenderer.on('db-message', message)
+    dbMessage: (message) => ipcRenderer.on('db-message', message),
+    newFornecedor: (fornecedor) => ipcRenderer.send('new-fornecedor', fornecedor)
     
 })
 
@@ -22,19 +23,17 @@ ipcRenderer.on('db-status', (event, status) => {
     console.log(status)
 })
 
-// inserir data na página
-function obterData() {
-    const data = new Date()
-    const options = {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    }
-    return data.toLocaleDateString('pt-BR', options)
-}
+// // inserir data na página
+// function obterData() {
+//     const data = new Date()
+//     const options = {
+//         weekday: 'long',
+//         year: 'numeric',
+//         month: 'long',
+//         day: 'numeric'
+//     }
+//     return data.toLocaleDateString('pt-BR', options)
+// }
 
-// interagir diretamente no DOM do documento html (index.html)
-window.addEventListener('DOMContentLoaded', () => {
-    const dataAtual = document.getElementById('dataAtual').innerHTML = obterData()
-})
+// // interagir diretamente no DOM do documento html (index.html)
+// document.getElementById('dataAtual').innerHTML = obterData()

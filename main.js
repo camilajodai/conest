@@ -1,9 +1,11 @@
-const { ipcMain, Menu, shell } = require('electron')
+const { ipcMain, Menu, shell, dialog } = require('electron')
 const { app, BrowserWindow } = require('electron/main')
 const path = require('node:path')
 // importar o módulo de conexão
-const { conectar, desconectar } = require('./database.js')
+const { dbStatus, desconectar } = require('./database.js')
+let dbCon = null
 const clienteModel = require('./src/models/Cliente.js')
+const fornecedorModel = require('./src/models/Fornecedor.js')
 
 // janela principal (definir o objeto win como variavel publica)
 let win
@@ -139,13 +141,13 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('db-conect', async (event, message) => {
-    dbCon = await conectar()
+    dbCon = await dbStatus()
     event.reply('db-message', "conectado")
   })
 
   // desconectar do banco ao encerrar a janela
   app.on('before-quit', async () => {
-    await desconectar()
+    await desconectar(dbCon)
   })
 
   createWindow()
@@ -277,6 +279,45 @@ ipcMain.on('new-client', async (event, cliente) => {
       emailCliente: cliente.emailCli
     })
     await novoCliente.save() //save() - mongoose
+    dialog.showMessageBox({
+      type: "info",
+      title: "Aviso",
+      message: "Cliente cadastrado com sucesso",
+      buttons: ['Ok']
+    })
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+// CRUD CREATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+ipcMain.on('new-fornecedor', async (event, fornecedor) => {
+  console.log(fornecedor) //teste do passo 2
+  // passo 3 - cadastrar o cliente no mongodb
+  try {
+    // extarir os dados do objeto
+    const novoFornecedor = new fornecedorModel({
+      razaoFornecedor: fornecedor.razaoFornec,
+      foneFornecedor: fornecedor.foneFornec,
+      cnpjFornecedor: fornecedor.cnpjFornec,
+      emailFornecedor: fornecedor.emailFornec,
+      cepFornecedor: fornecedor.cepFornec,
+      logradouroFornecedor: fornecedor.logradouroFornec,
+      numeroFornecedor: fornecedor.numeroFornec,
+      bairroFornecedor: fornecedor.bairroFornec,
+      cidadeFornecedor: fornecedor.cidadeFornec,
+      ufFornecedor: fornecedor.ufFornec,
+      complementoFornecedor: fornecedor.complementoFornec
+    })
+    await novoFornecedor.save() //save() - mongoose
+    dialog.showMessageBox({
+      type: "info",
+      title: "Aviso",
+      message: "Fornecedor cadastrado com sucesso",
+      buttons: ['Ok']
+    })
   } catch (error) {
     console.log(error)
   }
