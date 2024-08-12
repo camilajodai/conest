@@ -11,14 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
     btnDelete.disabled = true
 })
 
-// Alterar comportamento do ENTER dentro do formulário (UX)
-document.getElementById('frmCliente').addEventListener('keydown', (event) => {
+// FUNÇÃO PARA MANIPULAR A TECLA ENTER
+function teclaEnter(event) {
     if (event.key === 'Enter') {
         event.preventDefault()
         // executar a função associada ao botão Buscar
         buscarCliente()
     }
-})
+}
+
+// ADICIONAR O MANIPULADOR DA TECLA ENTER
+document.getElementById('frmCliente').addEventListener('keydown', teclaEnter)
+
+// REMOVER MANIPULADOR DA TECLA ENTER
+function removerEnter() {
+    document.getElementById('frmCliente').removeEventListener('keydown', teclaEnter)
+}
 
 
 // CRUD CREATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -66,21 +74,45 @@ function buscarCliente() {
     })
     // setar o nome do cliente
     api.nameCliente((args) => {
-        let setarNomeCliente = document.getElementById('inputSearch').value.trim()
-        document.getElementById('inputName').value = setarNomeCliente
+        // restaurar o comportamento padrão da tecla enter
+        removerEnter()
+        let setarNomeCliente = document.getElementById('inputSearch').value
+        document.getElementById('inputName').value += setarNomeCliente
+        // document.getElementById('inputId').value = ""
+        // document.getElementById('inputFone').value = ""
+        // document.getElementById('inputAddress').value = ""
         document.getElementById('inputSearch').value = ""
         document.getElementById('inputSearch').disabled = false
-        document.getElementById('inputName').focus()
+        document.getElementById('inputSearch').blur()
         btnRead.disabled = true
         btnCreate.disabled = false
-        
+
     })
     // limpa a caixa de busca e  seta o foco
     api.clearSearch((args) => {
         document.getElementById('inputSearch').value = ""
         document.getElementById('inputSearch').focus()
     })
-    
+    // receber do main.js os dados do cliente PASSO 4
+    api.dataCliente((event, dadosCliente) => {
+        arrayCliente = JSON.parse(dadosCliente)
+        console.log(arrayCliente)
+        
+        // PASSO 5 (final) percorrer o array, extrair os dados e setar os campos de texto do formulário
+    arrayCliente.forEach((c) => {
+        document.getElementById('inputId').value = c._id,
+        document.getElementById('inputName').value = c.nomeCliente,
+        document.getElementById('inputFone').value = c.foneCliente,
+        document.getElementById('inputAddress').value = c.emailCliente
+        // limpar a caixa de busca
+        document.getElementById('inputSearch').value = ""
+        document.getElementById('inputSearch').disabled = true
+        document.getElementById("inputSearch").blur()
+        // ativar os botões update e delete
+        document.getElementById('btnUpdate').disabled = false
+        document.getElementById('btnDelete').disabled = false
+    })
+    })
 }
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
@@ -96,12 +128,20 @@ function buscarCliente() {
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 
+
 // RESET DO FORMULÁRIO
+api.resetForm((args) => {
+    resetForm()   
+})
+
+
 function resetForm() {
-    document.getElementById('inputSearch').focus()
+    document.getElementById('inputSearch').disabled = false    
+    document.getElementById('inputSearch').focus() 
     btnCreate.disabled = true
+    btnRead.disabled = false
     btnUpdate.disabled = true
     btnDelete.disabled = true
-    document.getElementById('inputSearch').disabled = false
-    btnRead.disabled = false
+    
+    document.getElementById("frmCliente").addEventListener("keydown", teclaEnter)
 }

@@ -13,7 +13,9 @@ contextBridge.exposeInMainWorld('api', {
     focusSearch: (args) => ipcRenderer.on('focus-search', args),
     searchCliente: (nomeCliente) => ipcRenderer.send('search-cliente', nomeCliente),
     nameCliente: (args) => ipcRenderer.on('name-cliente', args),
-    clearSearch: (args) => ipcRenderer.on('clear-search', args)
+    clearSearch: (args) => ipcRenderer.on('clear-search', args),
+    dataCliente: (dadosCliente) => ipcRenderer.on('data-cliente', dadosCliente),
+    resetForm: (args) => ipcRenderer.on('reset-form', args)
 })
 
 

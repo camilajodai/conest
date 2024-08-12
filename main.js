@@ -285,6 +285,7 @@ ipcMain.on('new-client', async (event, cliente) => {
       message: "Cliente cadastrado com sucesso",
       buttons: ['Ok']
     })
+    event.reply('reset-form')
   } catch (error) {
     console.log(error)
   }
@@ -331,7 +332,7 @@ ipcMain.on('dialog-infoSearchDialog', (event) => {
   dialog.showMessageBox({
     type: 'warning',
     title: 'Atenção',
-    message: 'Preencha o nome do cliente',
+    message: 'Pesquise pelo cliente no campo de busca',
     buttons: ['Ok']
   })
   event.reply('focus-search')
@@ -362,7 +363,7 @@ ipcMain.on('search-cliente', async (event, nomeCliente) => {
         }
       })
     } else { //passo 4 - envia os dados do cliente ao renderizador
-
+      event.reply('data-cliente', JSON.stringify(dadosCliente))
     }
   } catch (error) {
     console.log(error)
