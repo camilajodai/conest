@@ -12,21 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 // FUNÇÃO PARA MANIPULAR A TECLA ENTER
-function teclaEnter(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault()
-        // executar a função associada ao botão Buscar
-        buscarCliente()
-    }
-}
+// function teclaEnter(event) {
+//     if (event.key === 'Enter') {
+//         event.preventDefault()
+//         // executar a função associada ao botão Buscar
+//         buscarCliente()
+//     }
+// }
 
 // ADICIONAR O MANIPULADOR DA TECLA ENTER
-document.getElementById('frmCliente').addEventListener('keydown', teclaEnter)
+// document.getElementById('frmCliente').addEventListener('keydown', teclaEnter)
 
 // REMOVER MANIPULADOR DA TECLA ENTER
-function removerEnter() {
-    document.getElementById('frmCliente').removeEventListener('keydown', teclaEnter)
-}
+// function removerEnter() {
+//     document.getElementById('frmCliente').removeEventListener('keydown', teclaEnter)
+// }
 
 
 // CRUD CREATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -35,6 +35,7 @@ let formCliente = document.getElementById('frmCliente')
 let nomeCliente = document.getElementById('inputName')
 let foneCliente = document.getElementById('inputFone')
 let emailCliente = document.getElementById('inputAddress')
+let idCliente = document.getElementById('inputId')
 // evento relacionado ao botao (passo 1 slide)
 formCliente.addEventListener('submit', async (event) => {
     event.preventDefault()
@@ -75,14 +76,14 @@ function buscarCliente() {
     // setar o nome do cliente
     api.nameCliente((args) => {
         // restaurar o comportamento padrão da tecla enter
-        removerEnter()
+        // removerEnter()
         let setarNomeCliente = document.getElementById('inputSearch').value
         document.getElementById('inputName').value += setarNomeCliente
         // document.getElementById('inputId').value = ""
         // document.getElementById('inputFone').value = ""
         // document.getElementById('inputAddress').value = ""
         document.getElementById('inputSearch').value = ""
-        document.getElementById('inputSearch').disabled = false
+        document.getElementById('inputSearch').disabled = true
         document.getElementById('inputSearch').blur()
         btnRead.disabled = true
         btnCreate.disabled = false
@@ -120,11 +121,27 @@ function buscarCliente() {
 
 
 // CRUD UPDATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function editarCliente() {
+    // passo 1
+    const cliente = {
+        idCli: idCliente.value,
+        nomeCli: nomeCliente.value,
+        foneCli: foneCliente.value,
+        emailCli: emailCliente.value
+    }
+    console.log(cliente)
+    api.updateClient(cliente)
+}
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 
 
 // CRUD DELETE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function excluirCliente() {
+    let idCli = idCliente.value
+    console.log(idCli)
+    api.deleteClient(idCli)
+}
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 
@@ -136,6 +153,10 @@ api.resetForm((args) => {
 
 
 function resetForm() {
+    document.getElementById('inputId').value = ""
+    document.getElementById('inputName').value = ""
+    document.getElementById('inputFone').value = ""
+    document.getElementById('inputAddress').value = ""
     document.getElementById('inputSearch').disabled = false    
     document.getElementById('inputSearch').focus() 
     btnCreate.disabled = true
@@ -143,5 +164,5 @@ function resetForm() {
     btnUpdate.disabled = true
     btnDelete.disabled = true
     
-    document.getElementById("frmCliente").addEventListener("keydown", teclaEnter)
+    // document.getElementById("frmCliente").addEventListener("keydown", teclaEnter)
 }

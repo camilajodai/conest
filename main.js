@@ -375,9 +375,62 @@ ipcMain.on('search-cliente', async (event, nomeCliente) => {
 
 
 // CRUD UPDATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('update-client', async (event, cliente) => {
+  console.log(cliente)
+
+  try {
+    const clienteEditado = await clienteModel.findByIdAndUpdate(
+      cliente.idCli, {
+      nomeCliente: cliente.nomeCli,
+      foneCliente: cliente.foneCli,
+      emailCliente: cliente.emailCli
+    },
+      {
+        new: true
+      }
+    )
+    dialog.showMessageBox({
+      type: "info",
+      title: "Aviso",
+      message: "Cliente editado com sucesso",
+      buttons: ['Ok']
+    })
+    event.reply('reset-form')
+  } catch (error) {
+    console.log(error)
+  }
+})
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 
 
 // CRUD DELETE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('delete-client', (event, idCli) => {
+  console.log(idCli)
+  // confimar a exclusão
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'ATENÇÃO',
+    message: 'Tem certeza que deseja excluir este cliente?',
+    buttons: ['Sim', 'Não'],
+    defaultId: 0
+  }).then (async(result) => {
+    if (result.response === 0) {
+      //passo 3 - excluir cliente do banco
+      try {
+        await clienteModel.findByIdAndDelete(idCli)
+        dialog.showMessageBox({
+          type: "info",
+          title: "Aviso",
+          message: "Cliente excluído com sucesso",
+          buttons: ['Ok']
+        })
+        event.reply('reset-form')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  })
+
+})
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
