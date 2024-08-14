@@ -319,6 +319,7 @@ ipcMain.on('new-fornecedor', async (event, fornecedor) => {
       message: "Fornecedor cadastrado com sucesso",
       buttons: ['Ok']
     })
+    event.reply('reset-form')
   } catch (error) {
     console.log(error)
   }
@@ -332,7 +333,7 @@ ipcMain.on('dialog-infoSearchDialog', (event) => {
   dialog.showMessageBox({
     type: 'warning',
     title: 'Atenção',
-    message: 'Pesquise pelo cliente no campo de busca',
+    message: 'Preencha o campo de busca',
     buttons: ['Ok']
   })
   event.reply('focus-search')
@@ -369,6 +370,35 @@ ipcMain.on('search-cliente', async (event, nomeCliente) => {
     console.log(error)
   }
 })
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FORNEC
+ipcMain.on('search-fornecedor', async (event, razaoFornecedor) => {
+  console.log(razaoFornecedor)
+  try {
+    const dadosFornecedor = await fornecedorModel.find({ razaoFornecedor: new RegExp(razaoFornecedor, 'i') })
+    console.log(dadosFornecedor)
+    if (dadosFornecedor.length === 0) {
+      dialog.showMessageBox({
+        type: 'warning',
+        title: 'Aviso',
+        message: 'Fornecedor não cadastrado. \nDeseja cadastrar esse fornecedor?',
+        buttons: ['Sim', 'Não'],
+        defaultId: 0
+      }).then((result) => {
+        if (result.response === 0) {
+          event.reply('name-fornecedor')
+        } else {
+          event.reply('clear-search')
+        }
+      })
+    } else {
+      event.reply('data-fornecedor', JSON.stringify(dadosFornecedor))
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 

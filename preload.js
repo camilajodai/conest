@@ -17,7 +17,11 @@ contextBridge.exposeInMainWorld('api', {
     dataCliente: (dadosCliente) => ipcRenderer.on('data-cliente', dadosCliente),
     resetForm: (args) => ipcRenderer.on('reset-form', args),
     updateClient: (cliente) => ipcRenderer.send('update-client', cliente),
-    deleteClient: (idCli) => ipcRenderer.send('delete-client', idCli)
+    deleteClient: (idCli) => ipcRenderer.send('delete-client', idCli),
+    
+    searchFornecedor: (razaoFornecedor) => ipcRenderer.send('search-fornecedor', razaoFornecedor),
+    nameFornecedor: (args) => ipcRenderer.on('name-fornecedor', args),
+    dataFornecedor: (dadosFornecedor) => ipcRenderer.on('data-fornecedor', dadosFornecedor)
 })
 
 
