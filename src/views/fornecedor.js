@@ -17,6 +17,7 @@ let bairroFornecedor = document.getElementById('inputBairro')
 let cidadeFornecedor = document.getElementById('inputCidade')
 let ufFornecedor = document.getElementById('uf')
 let complementoFornecedor = document.getElementById('inputComplemento')
+let idFornecedor = document.getElementById('inputId')
 
 formFornec.addEventListener('submit', async (event) => {
     event.preventDefault()
@@ -98,27 +99,54 @@ function buscarFornecedor() {
             document.getElementById('btnDelete').disabled = false
         })
     })
-
-
-
-
-
-
-
 }
 
+    function editarFornec() {
+        const fornecedor = {
+            idFornec: idFornecedor.value,
+            razaoFornec: razaoFornecedor.value,
+            foneFornec: foneFornecedor.value,
+            cnpjFornec: cnpjFornecedor.value,
+            emailFornec: emailFornecedor.value,
+            cepFornec: cepFornecedor.value,
+            logradouroFornec: logradouroFornecedor.value,
+            numeroFornec: numeroFornecedor.value,
+            bairroFornec: bairroFornecedor.value,
+            cidadeFornec: cidadeFornecedor.value,
+            ufFornec: ufFornecedor.value,
+            complementoFornec: complementoFornecedor.value
+        }
+        console.log(fornecedor)
+        api.updateFornecedor(fornecedor)
+    }
+
+    function excluirFornec() {
+        let idFornec = idFornecedor.value
+        console.log(idFornec)
+        api.deleteFornec(idFornec)
+    }
+    
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 api.resetForm((args) => {
-    resetForm()   
+    resetForm()
 })
 
 function resetForm() {
     document.getElementById('inputId').value = ""
-    document.getElementById('inputName').value = ""
+    document.getElementById('inputRazao').value = ""
     document.getElementById('inputFone').value = ""
+    document.getElementById('inputCnpj').value = ""
     document.getElementById('inputAddress').value = ""
-    document.getElementById('inputSearch').disabled = false    
-    document.getElementById('inputSearch').focus() 
+    document.getElementById('inputCep').value = ""
+    document.getElementById('inputLogradouro').value = ""
+    document.getElementById('inputNumero').value = ""
+    document.getElementById('inputBairro').value = ""
+    document.getElementById('inputCidade').value = ""
+    document.getElementById('uf').value = ""
+    document.getElementById('inputComplemento').value = ""
+
+    document.getElementById('inputSearch').disabled = false
+    document.getElementById('inputSearch').focus()
     btnCreate.disabled = true
     btnRead.disabled = false
     btnUpdate.disabled = true

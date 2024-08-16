@@ -430,6 +430,42 @@ ipcMain.on('update-client', async (event, cliente) => {
     console.log(error)
   }
 })
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('update-fornec', async (event, fornecedor) => {
+  console.log(fornecedor)
+
+  try {
+    const fornecedorEditado = await fornecedorModel.findByIdAndUpdate(
+      fornecedor.idFornec, {
+        razaoFornecedor: fornecedor.razaoFornec,
+        foneFornecedor: fornecedor.foneFornec,
+        cnpjFornecedor: fornecedor.cnpjFornec,
+        emailFornecedor: fornecedor.emailFornec,
+        cepFornecedor: fornecedor.cepFornec,
+        logradouroFornecedor: fornecedor.logradouroFornec,
+        numeroFornecedor: fornecedor.numeroFornec,
+        bairroFornecedor: fornecedor.bairroFornec,
+        cidadeFornecedor: fornecedor.cidadeFornec,
+        ufFornecedor: fornecedor.ufFornec,
+        complementoFornecedor: fornecedor.complementoFornec
+    },
+      {
+        new: true
+      }
+    )
+    dialog.showMessageBox({
+      type: "info",
+      title: "Aviso",
+      message: "Fornecedor editado com sucesso",
+      buttons: ['Ok']
+    })
+    event.reply('reset-form')
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 
@@ -453,6 +489,36 @@ ipcMain.on('delete-client', (event, idCli) => {
           type: "info",
           title: "Aviso",
           message: "Cliente excluído com sucesso",
+          buttons: ['Ok']
+        })
+        event.reply('reset-form')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  })
+
+})
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('delete-fornec', (event, idFornec) => {
+  console.log(idFornec)
+  // confimar a exclusão
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'ATENÇÃO',
+    message: 'Tem certeza que deseja excluir este fornecedor?',
+    buttons: ['Sim', 'Não'],
+    defaultId: 0
+  }).then (async(result) => {
+    if (result.response === 0) {
+      //passo 3 - excluir cliente do banco
+      try {
+        await fornecedorModel.findByIdAndDelete(idFornec)
+        dialog.showMessageBox({
+          type: "info",
+          title: "Aviso",
+          message: "Fornecedor excluído com sucesso",
           buttons: ['Ok']
         })
         event.reply('reset-form')

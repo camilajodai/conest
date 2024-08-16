@@ -79,9 +79,6 @@ function buscarCliente() {
         // removerEnter()
         let setarNomeCliente = document.getElementById('inputSearch').value
         document.getElementById('inputName').value += setarNomeCliente
-        // document.getElementById('inputId').value = ""
-        // document.getElementById('inputFone').value = ""
-        // document.getElementById('inputAddress').value = ""
         document.getElementById('inputSearch').value = ""
         document.getElementById('inputSearch').disabled = true
         document.getElementById('inputSearch').blur()

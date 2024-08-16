@@ -21,7 +21,9 @@ contextBridge.exposeInMainWorld('api', {
     
     searchFornecedor: (razaoFornecedor) => ipcRenderer.send('search-fornecedor', razaoFornecedor),
     nameFornecedor: (args) => ipcRenderer.on('name-fornecedor', args),
-    dataFornecedor: (dadosFornecedor) => ipcRenderer.on('data-fornecedor', dadosFornecedor)
+    dataFornecedor: (dadosFornecedor) => ipcRenderer.on('data-fornecedor', dadosFornecedor),
+    updateFornecedor: (fornecedor) => ipcRenderer.send('update-fornec', fornecedor),
+    deleteFornec: (idFornec) => ipcRenderer.send('delete-fornec', idFornec)
 })
 
 
