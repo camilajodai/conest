@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnDelete.disabled = true
 })
 
+
 let formFornec = document.getElementById('frmFornecedor')
 let razaoFornecedor = document.getElementById('inputRazao')
 let foneFornecedor = document.getElementById('inputFone')
@@ -101,31 +102,54 @@ function buscarFornecedor() {
     })
 }
 
-    function editarFornec() {
-        const fornecedor = {
-            idFornec: idFornecedor.value,
-            razaoFornec: razaoFornecedor.value,
-            foneFornec: foneFornecedor.value,
-            cnpjFornec: cnpjFornecedor.value,
-            emailFornec: emailFornecedor.value,
-            cepFornec: cepFornecedor.value,
-            logradouroFornec: logradouroFornecedor.value,
-            numeroFornec: numeroFornecedor.value,
-            bairroFornec: bairroFornecedor.value,
-            cidadeFornec: cidadeFornecedor.value,
-            ufFornec: ufFornecedor.value,
-            complementoFornec: complementoFornecedor.value
-        }
-        console.log(fornecedor)
-        api.updateFornecedor(fornecedor)
+function editarFornec() {
+
+    const errorMessage = document.getElementById('errorMessage')
+
+    
+    if (razaoFornecedor.value.trim() === "" ||
+        foneFornecedor.value.trim() === "" ||
+        cnpjFornecedor.value.trim() === "" ||
+        emailFornecedor.value.trim() === "" ||
+        cepFornecedor.value.trim() === "" ||
+        logradouroFornecedor.value.trim() === "" ||
+        numeroFornecedor.value.trim() === "" ||
+        bairroFornecedor.value.trim() === "" ||
+        cidadeFornecedor.value.trim() === "" ||
+        ufFornecedor.value.trim() === "") {
+
+        
+        errorMessage.style.display = 'block'
+        return
     }
 
-    function excluirFornec() {
-        let idFornec = idFornecedor.value
-        console.log(idFornec)
-        api.deleteFornec(idFornec)
-    }
     
+    
+
+    const fornecedor = {
+        idFornec: idFornecedor.value,
+        razaoFornec: razaoFornecedor.value,
+        foneFornec: foneFornecedor.value,
+        cnpjFornec: cnpjFornecedor.value,
+        emailFornec: emailFornecedor.value,
+        cepFornec: cepFornecedor.value,
+        logradouroFornec: logradouroFornecedor.value,
+        numeroFornec: numeroFornecedor.value,
+        bairroFornec: bairroFornecedor.value,
+        cidadeFornec: cidadeFornecedor.value,
+        ufFornec: ufFornecedor.value,
+        complementoFornec: complementoFornecedor.value
+    }
+    console.log(fornecedor)
+    api.updateFornecedor(fornecedor)
+}
+
+function excluirFornec() {
+    let idFornec = idFornecedor.value
+    console.log(idFornec)
+    api.deleteFornec(idFornec)
+}
+
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 api.resetForm((args) => {
     resetForm()
@@ -151,4 +175,6 @@ function resetForm() {
     btnRead.disabled = false
     btnUpdate.disabled = true
     btnDelete.disabled = true
+
+    document.getElementById('errorMessage').style.display = 'none'
 }
