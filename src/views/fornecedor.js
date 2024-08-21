@@ -104,28 +104,6 @@ function buscarFornecedor() {
 
 function editarFornec() {
 
-    const errorMessage = document.getElementById('errorMessage')
-
-    
-    if (razaoFornecedor.value.trim() === "" ||
-        foneFornecedor.value.trim() === "" ||
-        cnpjFornecedor.value.trim() === "" ||
-        emailFornecedor.value.trim() === "" ||
-        cepFornecedor.value.trim() === "" ||
-        logradouroFornecedor.value.trim() === "" ||
-        numeroFornecedor.value.trim() === "" ||
-        bairroFornecedor.value.trim() === "" ||
-        cidadeFornecedor.value.trim() === "" ||
-        ufFornecedor.value.trim() === "") {
-
-        
-        errorMessage.style.display = 'block'
-        return
-    }
-
-    
-    
-
     const fornecedor = {
         idFornec: idFornecedor.value,
         razaoFornec: razaoFornecedor.value,
@@ -176,5 +154,5 @@ function resetForm() {
     btnUpdate.disabled = true
     btnDelete.disabled = true
 
-    document.getElementById('errorMessage').style.display = 'none'
+    
 }

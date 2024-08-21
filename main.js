@@ -433,8 +433,24 @@ ipcMain.on('update-client', async (event, cliente) => {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ipcMain.on('update-fornec', async (event, fornecedor) => {
-  console.log(fornecedor)
-
+  if(fornecedor.razaoFornec === "" ||
+  fornecedor.cnpjFornec === "" ||
+  fornecedor.foneFornec === "" ||
+  fornecedor.emailFornec === "" ||
+  fornecedor.cepFornec === "" ||
+  fornecedor.logradouroFornec === "" ||
+  fornecedor.numeroFornec === "" ||
+  fornecedor.bairroFornec === "" ||
+  fornecedor.cidadeFornec === "" ||
+  fornecedor.ufFornec === ""
+  ){
+      dialog.showMessageBox({
+          type:'error',
+          title: "Atenção!",
+          message: "Preencha os campos vazios"
+      })
+      return
+  }
   try {
     const fornecedorEditado = await fornecedorModel.findByIdAndUpdate(
       fornecedor.idFornec, {
